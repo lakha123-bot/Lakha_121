@@ -21,10 +21,9 @@ jobs:
 
     - name: Start Ngrok Tunnel
       run: |
-        Start-Process ngrok -ArgumentList "tcp 3389"
-        Start-Sleep -Seconds 20
-        curl 127.0.0.1:4040/api/tunnels > tunnels.json
-        type tunnels.json
+        Start-Process -NoNewWindow ngrok "tcp 3389"
+        Start-Sleep -Seconds 15
+        Invoke-RestMethod http://127.0.0.1:4040/api/tunnels | ConvertTo-Json -Depth 5
 
     - name: Keep Session Alive
       run: ping -t 127.0.0.1
