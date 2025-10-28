@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lakha Rathod - Menu (Dark Mode)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a futuristic dark theme */
+        :root {
+            --body-bg-color: #121212; /* Deep Dark Background */
+            --container-bg-color: #1e1e1e; /* Slightly Lighter Dark Container */
+            --primary-text-color: #f0f0f0; /* Light Text */
+            --secondary-text-color: #a0a0a0;
+            --highlight-color-1: #00bcd4; /* Cyan Blue */
+            --highlight-color-2: #ff4081; /* Pink Accent */
+            --button-border-radius: 1.5rem;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--body-bg-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* ------------------ Background Animation (Subtle Grid/Dots) ------------------ */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            /* Creates a subtle dark grid effect */
+            background-image: radial-gradient(var(--secondary-text-color) 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+            animation: bg-pan 30s linear infinite;
+        }
+
+        @keyframes bg-pan {
+            from { background-position: 0% 0%; }
+            to { background-position: 100% 100%; }
+        }
+        
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--container-bg-color);
+            /* Add a subtle neon border glow effect */
+            box-shadow: 
+                0 0 10px rgba(0, 188, 212, 0.4), /* Cyan glow */
+                0 0 25px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+            border-radius: 20px;
+            border: 1px solid #333; /* Dark border */
+            padding: 25px 30px 40px 30px; 
+            min-height: 80vh; 
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .container:hover {
+             box-shadow: 
+                0 0 15px rgba(0, 188, 212, 0.7), /* Increased Cyan glow */
+                0 0 35px rgba(0, 0, 0, 0.7);
+        }
+
+
+        /* ------------------ Header Styling ------------------ */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 0; 
+        }
+
+        .logo-name-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            overflow: hidden;
+            background-color: var(--body-bg-color);
+            border: 2px solid var(--highlight-color-1); /* Cyan Border */
+            /* Logo Glow */
+            box-shadow: 0 0 8px var(--highlight-color-1);
+        }
+        
+        .logo-icon-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .website-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-color-1); /* Cyan Text */
+            text-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+            line-height: 1.3;
+        }
+
+        /* Menu Button */
+        .menu-button {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            position: relative;
+            z-index: 20;
+            color: var(--highlight-color-2); /* Pink for menu icon */
+        }
+        
+        .menu-button i {
+            font-size: 1.5rem;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px; 
+            right: 0;
+            background-color: #2b2b2b; /* Darker background for menu */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 64, 129, 0.5); /* Pink shadow */
+            border-radius: 10px;
+            min-width: 270px;
+            z-index: 100;
+            padding: 5px 0;
+            border: 1px solid #444;
+        }
+        
+        .menu-button.active .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: var(--primary-text-color);
+            font-size: 0.95rem;
+            transition: background-color 0.2s, color 0.2s;
+            font-weight: 500;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: #383838;
+            color: var(--highlight-color-2);
+        }
+        
+        .dropdown-menu a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--highlight-color-1);
+        }
+
+
+        /* ------------------ Main Content Styling ------------------ */
+        .main-content {
+            text-align: left;
+            margin-top: 40px; 
+        }
+
+        .welcome-heading {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            line-height: 1.2;
+            color: var(--highlight-color-2); /* Pink Heading */
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.6);
+        }
+
+        .emoji-confetti {
+            font-size: 2.5rem;
+            margin-right: 8px;
+            vertical-align: middle;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* ------------------ Options Buttons Styling ------------------ */
+        .options-container {
+            display: grid;
+            gap: 25px;
+        }
+
+        .option-button {
+            width: 100%;
+            padding: 18px 25px;
+            border: none;
+            border-radius: var(--button-border-radius);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Button Hover Effect (Shine) */
+        .option-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%) skewX(-20deg);
+            transition: transform 0.7s;
+        }
+
+        .option-button:hover::after {
+            transform: translateX(100%) skewX(-20deg);
+        }
+
+        .option-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Button Gradients (More defined, modern look) */
+        .lakhalive-button { 
+            background: linear-gradient(135deg, #00c6ff, #0072ff); 
+            box-shadow: 0 0 15px rgba(0, 114, 255, 0.7);
+        }
+        .thacker-store-button { 
+            background: linear-gradient(135deg, #2ecc71, #1abc9c); 
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.7);
+        }
+        .thacker-settings-button { 
+            background: linear-gradient(135deg, #9b59b6, #8e44ad); 
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.7);
+        }
+        .ipcheck-button { 
+            background: linear-gradient(135deg, #f1c40f, #e67e22); 
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.7);
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 2; /* Keep content above shine effect */
+        }
+
+        .custom-icon-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            background-color: rgba(0, 0, 0, 0.3); /* Darker transparent background */
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            font-size: 1.5rem;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s;
+        }
+        
+        .option-button:hover .custom-icon-circle {
+            transform: rotate(10deg);
+        }
+
+
+        .lakhalive-icon, .thacker-store-icon, .thacker-settings-icon, .ipcheck-icon {
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        .button-text-group {
+            font-weight: 700;
+        }
+        
+        /* ------------------ Responsiveness ------------------ */
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+                padding: 20px 20px 30px 20px;
+                box-shadow: none; /* Remove box-shadow on full screen mobile */
+            }
+            .website-name {
+                font-size: 1.1rem;
+            }
+            .welcome-heading {
+                font-size: 1.8rem;
+                margin-bottom: 35px;
+            }
+            .option-button {
+                font-size: 1.1rem;
+                padding: 15px 20px;
+            }
+            .custom-icon-circle {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+            }
+            .lakhalive-icon, .thacker-store-icon, .thacker-settings-icon, .ipcheck-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="background-animation"></div>
+
+<div class="container">
+    <header class="header">
+        <div class="logo-name-group">
+            <div class="logo-icon-container">
+                <img src="data:image/jpeg;base64,{{uploaded:image.png-8fc1b671-67e1-4145-940a-2d81ad1ab07b}}" alt="Jamnagar Official Logo">
+            </div>
+            <span class="website-name">𓆩™︎ 𝐉𝐀𝐌 𝐍𝐀𝐆𝐀𝐑 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋𓆪</span>
+        </div>
+
+        <button class="menu-button" id="menuButton" aria-label="Menu" tabindex="0">
+             <i class="fas fa-bars"></i>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="https://t.me/tm_jam_nagar" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram-plane"></i> 𓆩™︎ 𝐉𝐀𝐌 𝐍𝐀𝐆𝐀𝐑 𝐎𝐅𝐅𝐈𝐂𝐈𝐀 L𓆪
+                </a>
+                <a href="https://t.me/technically_hacker_store" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram-plane"></i> Technically Hacker 🤝 Store
+                </a>
+                <a href="https://t.me/back_p9" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram-plane"></i> Back+99❤️ Group
+                </a>
+            </div>
+        </button>
+    </header>
+
+    <main class="main-content">
+        <h1 class="welcome-heading">
+            <span class="emoji-confetti">🔥</span> Welcome to Lakha Rathod!
+        </h1>
+        <div class="options-container">
+
+            <a href="https://lakharathod1.blogspot.com/2025/10/blog-post.html?m=1" class="option-button lakhalive-button" aria-label="Lakha Live">
+                <div class="button-content">
+                    <div class="custom-icon-circle">
+                        <i class="fas fa-laptop-code lakhalive-icon"></i>
+                    </div>
+                    <div class="button-text-group">
+                        Lakha Live
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://lakharathod1.blogspot.com/2025/10/blog-post_18.html?m=1" class="option-button thacker-store-button" aria-label="Technically Hacker Store">
+                <div class="button-content">
+                    <div class="custom-icon-circle">
+                        <i class="fas fa-store thacker-store-icon"></i>
+                    </div>
+                    <div class="button-text-group">
+                        Technically Hacker 🤝 Store
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://lakharathod1.blogspot.com/2025/10/blog-post_0.html?m=1" class="option-button thacker-settings-button" aria-label="Thacker Settings">
+                <div class="button-content">
+                    <div class="custom-icon-circle">
+                        <i class="fas fa-cogs thacker-settings-icon"></i>
+                    </div>
+                    <div class="button-text-group">
+                        ⚙️ ᴛʜᴀᴄᴋᴇʀ
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://lakharathod1.blogspot.com/2025/10/netscope-import-urlhttpsfonts.html?m=1" class="option-button ipcheck-button" aria-label="IP Check">
+                <div class="button-content">
+                    <div class="custom-icon-circle">
+                        <i class="fas fa-wifi ipcheck-icon"></i>
+                    </div>
+                    <div class="button-text-group">
+                        IP Check
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Toggle Menu on button click
+    document.getElementById('menuButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+    });
+
+    // Close Menu when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.closest('.menu-button') && !event.target.closest('.dropdown-menu')) {
+            var menuButton = document.getElementById("menuButton");
+            if (menuButton.classList.contains('active')) {
+                menuButton.classList.remove('active');
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
